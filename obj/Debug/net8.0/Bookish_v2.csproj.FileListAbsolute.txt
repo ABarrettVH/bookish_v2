@@ -137,3 +137,4 @@ C:\Users\AliBar\Documents\Training\Bookish\Bookish_v2\bin\Debug\net8.0\Swashbuck
 C:\Users\AliBar\Documents\Training\Bookish\Bookish_v2\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\AliBar\Documents\Training\Bookish\Bookish_v2\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\AliBar\Documents\Training\Bookish\Bookish_v2\obj\Debug\net8.0\Bookish_v2.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\AliBar\Documents\Training\Bookish\Bookish_v2\obj\Debug\net8.0\Bookish_v2.sourcelink.json

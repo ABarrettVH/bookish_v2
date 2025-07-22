@@ -80,22 +80,24 @@ public class BookController : Controller
 
         return View("ListAllBooks", new BookViewModel { Books = _context.Books.OrderBy(b => b.Author).ToList() });
     }
-    [HttpGet("EditBook")]
-    public IActionResult EditBookPage(BookViewModel book)
+    [HttpGet("EditBook/{Id}")]
+    public IActionResult EditBookPage(int Id)
     {
-        return View("EditBook");
+        var book = _context.Books.FirstOrDefault(b => b.BookID == Id);
+        if (book == null)
+        {
+            return NotFound();
+        }
+        return View("EditBook", book);
     }
     
-    [Route("/editBook")]
+    [Route("EditBook/{Id}")]
     [ValidateAntiForgeryToken]
-    [HttpPatch]
-    public IActionResult EditBook([FromForm] BookViewModel book)
+    [HttpPost]
+    public IActionResult EditBook([FromForm] BookViewModel book, int Id)
     {
 
-
-        BookViewModel Book = new BookViewModel();
-
-        var existingBook = _context.Books.FirstOrDefault(b => b.Title == book.Title && b.Author == book.Author);
+        var existingBook = _context.Books.FirstOrDefault(b => b.BookID == Id);
 
         if (existingBook != null)
         {
@@ -115,7 +117,7 @@ public class BookController : Controller
         }
         _context.SaveChanges();
 
-        return View();
+        return View("ListAllBooks", new BookViewModel { Books = _context.Books.OrderBy(b => b.Author).ToList() });
         
     }
 }
