@@ -1,0 +1,64 @@
+@model BookViewModel
+
+@{
+    ViewData["Title"] = "Book";
+}
+
+<h1 class="text-danger">Book Catalogue</h1>
+
+<a class="btn btn-primary" role="button" asp-controller="Book" asp-action="AddNewBookPage">
+    Add a new Book
+</a>
+
+@using (Html.BeginForm(null, null, FormMethod.Get))
+{
+    <p>
+        Find by Title or Author: @Html.TextBox("SearchString")  
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<div class="book-list-container">
+
+    @if (Model.Books != null)
+    {
+    
+    <div class="book-container">
+        <table class="book-list-table">
+            <thead class="book-list-table-header">
+                <tr>
+                    <th> Title</th>
+                    <th>Author</th>
+                    <th class="hidden-on-mobile">Total Copies</th>
+                    <th>Available Copies</th>
+                    <th>Check Out</th>
+                    <th>Edit Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.Books)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td class="hidden-on-mobile">@book.TotalCopies</td>
+                        <td>@book.AvailableCopies</td>
+                        <td><a class="btn btn-primary checkout-btn" role="button" asp-controller="Book" asp-action="AddNewBookPage">
+                                Check Out
+                            </a>
+                        </td>
+                        <td><a class="btn btn-primary edit-btn" role="button" asp-controller="Book" asp-action="EditBookPage">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+    else
+    {
+        <h3>There are no books in the catalogue</h3>
+    }
+</div>

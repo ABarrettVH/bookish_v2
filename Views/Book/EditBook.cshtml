@@ -1,0 +1,43 @@
+@model BookViewModel
+
+@{
+    ViewData["Title"] = "EditBook";
+}
+<h1 class="text-danger">Edit Book Details</h1>
+
+<form asp-controller="Books" asp-action="EditBook" method="patch" >
+    <label>
+        <p>Title</p>
+        <input id="Title" type=text name="Title" placeholder="Title"/>
+    </label>
+
+    <label>
+        <p>Author</p>
+        <input id="Author" type=text name="Author" placeholder="Author"/>
+    </label>
+
+    <label>
+        <p>Add/Remove Copy</p>
+        <input id="AddCopies" type=number name="AddCopies" placeholder="Total copies"/>
+    </label>
+    <button type="submit" id="submit">Submit</button>
+    </form>
+
+@* @if (Model.Books != null)
+{
+    <p>
+        @foreach (var book in Model.Books)
+        {
+            <strong>Title:</strong> <code>@book.Title</code><br />
+            <strong>Author:</strong> <code>@book.Author</code><br />
+            <strong>Total Copies:</strong> <code>@book.TotalCopies</code><br />
+            <strong>Available Copies:</strong> <code>@book.AvailableCopies</code><br />
+            <a class="btn btn-primary" role="button" asp-controller="Book" asp-action="AddNewBookPage"> Edit Book Details</a>
+
+            <hr />
+        }
+    </p>
+} else {
+    <h3>There are no books in the catalogue</h3>
+} *@
+
