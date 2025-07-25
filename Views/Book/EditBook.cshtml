@@ -1,8 +1,10 @@
+@using Bookish_v2.Models
 @model BookViewModel
 
 @{
     ViewData["Title"] = "EditBook";
 }
+
 <h1 class="text-danger">Edit Book Details</h1>
 
 <form asp-controller="Books" asp-action="EditBook" method="post" asp-route-id="@Model.BookID">

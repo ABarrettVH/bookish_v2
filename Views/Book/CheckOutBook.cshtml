@@ -1,0 +1,41 @@
+@model Bookish_v2.Models.MemberBookViewModel
+
+@{
+    ViewData["Title"] = "CheckOutBook";
+}
+
+<h1 class="text-danger">Check Out Book</h1>
+
+@if (Model != null && Model.Book != null)
+{
+    <form asp-controller="Books" asp-action="CheckOut" method="post" asp-route-id="@Model.BookID">
+        @Html.AntiForgeryToken()
+        
+        <div>
+            <label>
+                <p>Title</p>
+                <input id="Title" type="text" name="Title" value="@Model.Book.Title" readonly />
+            </label>
+        </div>
+
+        <div>
+            <label>
+                <p>Author</p>
+                <input id="Author" type="text" name="Author" value="@Model.Book.Author" readonly />
+            </label>
+        </div>
+
+        <div>
+            <label>
+                <p>Member ID</p>
+                <input id="MemberID" type="number" name="MemberID" required />
+            </label>
+        </div>
+        
+        <button type="submit">Check Out</button>
+    </form>
+}
+else
+{
+    <p class="text-danger">Book not found.</p>
+}

@@ -1,3 +1,4 @@
+@using Bookish_v2.Models
 @model BookViewModel
 
 @{
@@ -43,7 +44,7 @@
                         <td>@book.Author</td>
                         <td class="hidden-on-mobile">@book.TotalCopies</td>
                         <td>@book.AvailableCopies</td>
-                        <td><a class="btn btn-primary checkout-btn" role="button" asp-controller="Book" asp-action="AddNewBookPage">
+                        <td><a class="btn btn-primary checkout-btn" role="button" asp-controller="Book" asp-action="CheckOutBookPage" asp-route-id="@book.BookID">
                                 Check Out
                             </a>
                         </td>

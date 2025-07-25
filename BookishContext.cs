@@ -1,6 +1,6 @@
-using BookishDB.Models;
+using Bookish_v2.Models;
 using Microsoft.EntityFrameworkCore;
-namespace BookishDB
+namespace Bookish_v2_DB
 {
     public class BookishContext : DbContext
     {
