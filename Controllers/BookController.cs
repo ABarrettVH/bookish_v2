@@ -1,5 +1,4 @@
-using System.Diagnostics;
-using BookishDB;
+using Bookish_v2_DB;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Bookish_v2.Models;
@@ -33,8 +32,8 @@ public class BookController : Controller
         if (!string.IsNullOrEmpty(SearchString))
         {
             query = query.Where(b => 
-                (b.Author != null && b.Author.Contains(SearchString, StringComparison.OrdinalIgnoreCase)) ||
-                (b.Title != null && b.Title.Contains(SearchString, StringComparison.OrdinalIgnoreCase)));
+                (b.Author != null && b.Author.ToLower().Contains(SearchString.ToLower())) ||
+                (b.Title != null && b.Title.ToLower().Contains(SearchString.ToLower())));
         }
         
         var books = query.OrderBy(b => b.Author).ToList();
@@ -100,8 +99,7 @@ public class BookController : Controller
         {
             return NotFound();
         }
-        if (existingBook != null)
-        {
+        
             existingBook.Title = book.Title;
             existingBook.Author = book.Author;
             existingBook.AvailableCopies = existingBook.AvailableCopies - (existingBook.TotalCopies - book.TotalCopies);
@@ -114,12 +112,12 @@ public class BookController : Controller
             if (existingBook.TotalCopies == 0 && existingBook.AvailableCopies == 0)
             {
                 _context.Remove(existingBook);
+            
             }
-        }
         _context.SaveChanges();
 
-        return View("ListAllBooks", new BookViewModel { Books = _context.Books.OrderBy(b => b.Author).ToList() });
-
+        // return View("ListAllBooks", new BookViewModel { Books = _context.Books.OrderBy(b => b.Author).ToList() });
+        return RedirectToAction("ListAllBooks");
     }
 
     [HttpGet("CheckOut/{Id}")]
