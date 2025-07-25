@@ -1,4 +1,4 @@
-using BookishDB.Models;
+using Bookish_v2.Models;
 using Microsoft.EntityFrameworkCore;
 namespace BookishDB
 {

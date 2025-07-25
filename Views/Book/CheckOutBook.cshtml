@@ -1,0 +1,34 @@
+@using Bookish_v2.Models
+@model MemberBookViewModel
+
+@{
+    ViewData["Title"] = "CheckOutBook";
+}
+
+<h1 class="text-danger">Check Out Book</h1>
+
+@if (Model != null)
+{
+
+    <form asp-controller="Books" asp-action="CheckOutBook" method="post" asp-route-id="@Model.BookID">
+        <label>
+            <p>Title</p>
+            <input id="Title" type="text" name="Title" value="@Model.Book?.Title" readonly />
+        </label>
+
+        <label>
+            <p>Author</p>
+            <input id="Author" type="text" name="Author" value="@Model.Book?.Author" readonly />
+        </label>
+
+        <label>
+            <p>Member ID</p>
+            <input id="MemberID" type="number" name="MemberID" />
+        </label>
+        <button type="submit" id="submit">Check Out</button>
+    </form>
+}
+else
+{
+    <p class="text-danger">Book not found.</p>
+}

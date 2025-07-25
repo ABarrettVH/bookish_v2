@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BookishDB.Models;
+namespace Bookish_v2.Models;
 
 public class MemberViewModel
 {
