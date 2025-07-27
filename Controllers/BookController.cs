@@ -74,7 +74,22 @@ public class BookController : Controller
         _context.Books.Add(newBook);
         _context.SaveChanges();
 
-        return View("ListAllBooks", new BookViewModel { Books = _context.Books.OrderBy(b => b.Author).ToList() });
+        return RedirectToAction("ListAllBooks");
+    }
+
+    [HttpDelete("DeleteBook/{Id}")]
+    public IActionResult RemoveBook(int Id)
+    {
+
+        var book = _context.Books.FirstOrDefault(b => b.BookID == Id);
+        if (book == null)
+        {
+            return NotFound("Book doesn't exist");
+        }
+        _context.Books.Remove(book);
+        _context.SaveChanges();
+
+        return RedirectToAction("ListAllBooks");
     }
 
     [HttpGet("EditBook/{Id}")]
@@ -163,7 +178,7 @@ public class BookController : Controller
         _context.MemberBooks.Add(memberBook);
         _context.SaveChanges();
 
-        return View("ListAllBooks", new BookViewModel { Books = _context.Books.OrderBy(b => b.Author).ToList() });
+        return RedirectToAction("ListAllBooks");
 
     }
 
