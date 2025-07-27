@@ -2,6 +2,7 @@
 using Bookish_v2_DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookishDB.Migrations
 {
     [DbContext(typeof(BookishContext))]
-    partial class BookishContextModelSnapshot : ModelSnapshot
+    [Migration("20250727112547_updatedMemberTable")]
+    partial class updatedMemberTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,13 +117,13 @@ namespace BookishDB.Migrations
             modelBuilder.Entity("Bookish_v2.Models.MemberBookViewModel", b =>
                 {
                     b.HasOne("Bookish_v2.Models.BookViewModel", "Book")
-                        .WithMany()
+                        .WithMany("MemberBooks")
                         .HasForeignKey("BookID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Bookish_v2.Models.MemberViewModel", "Member")
-                        .WithMany()
+                        .WithMany("MemberBooks")
                         .HasForeignKey("MemberID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -140,10 +143,14 @@ namespace BookishDB.Migrations
             modelBuilder.Entity("Bookish_v2.Models.BookViewModel", b =>
                 {
                     b.Navigation("Books");
+
+                    b.Navigation("MemberBooks");
                 });
 
             modelBuilder.Entity("Bookish_v2.Models.MemberViewModel", b =>
                 {
+                    b.Navigation("MemberBooks");
+
                     b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
