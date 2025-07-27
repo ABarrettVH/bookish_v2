@@ -4,11 +4,11 @@ namespace Bookish_v2.Models;
 
 public class BookViewModel
 {
-    public BookViewModel()
-    {
-        MemberBooks = new List<MemberBookViewModel>();
+    // public BookViewModel()
+    // {
+    //     MemberBooks = new List<MemberBookViewModel>();
     
-    }
+    // }
 
     [System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
     [Key]
@@ -18,7 +18,6 @@ public class BookViewModel
     public int AvailableCopies { get; set; }
     public int TotalCopies { get; set; }
     public IList<BookViewModel>? Books { get; set; }
-    public IList<MemberBookViewModel> MemberBooks { get; set; }
 
 
 }

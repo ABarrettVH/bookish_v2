@@ -1,0 +1,63 @@
+@model List<MemberViewModel>
+@using Bookish_v2.Models
+
+@{
+    ViewData["Title"] = "All Members";
+}
+
+<h1 class="text-danger">Member Directory</h1>
+
+<a class="btn btn-primary" role="button" asp-controller="Book" asp-action="AddNewBookPage">
+    Add a new Member
+</a>
+
+@using (Html.BeginForm(null, null, FormMethod.Get))
+{
+    <p>
+        Find by first name, last name or postcode: @Html.TextBox("SearchString")  
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<div class="member-list-container">
+    @if (Model != null && Model.Any())
+    {
+        <div class="member-container">
+            <table class="member-list-table">
+                <thead class="member-list-table-header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Email</th>
+                        <th>PostCode</th>
+                        <th>Edit Details</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var member in Model)
+                    {
+                        <tr>
+                            <td>@member.MemberID</td>
+                            <td>@member.LastName</td>
+                            <td>@member.FirstName</td>
+                            <td>@member.Email</td>
+                            <td>@member.PostCode</td>
+                            <td>
+                            <a class="btn btn-primary edit-btn" role="button" asp-controller="Book" asp-action="EditBookPage" asp-route-id="@member.MemberID">
+                                Edit
+                            </a>
+                        </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <h3>There are no members</h3>
+    }
+</div>

@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\ListAllBooks.css"
     },
     {
+      "Id": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\css\\ListAllMembers.css",
+      "PackagePath": "staticwebassets\\css\\ListAllMembers.css"
+    },
+    {
       "Id": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
