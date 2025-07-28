@@ -16,7 +16,11 @@
         height: 40px;
         width: auto;
     }
-  
+      .delete-btn {
+       padding: 10px;
+        background-color: rgb(184 44 44);
+        color: white;
+    }
     tr {
         margin: 5px;
     }

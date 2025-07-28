@@ -4,12 +4,6 @@ namespace Bookish_v2.Models;
 
 public class BookViewModel
 {
-    // public BookViewModel()
-    // {
-    //     MemberBooks = new List<MemberBookViewModel>();
-    
-    // }
-
     [System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
     [Key]
     public int BookID { get; set; }

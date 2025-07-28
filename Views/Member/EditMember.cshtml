@@ -1,0 +1,34 @@
+@using Bookish_v2.Models
+@model MemberViewModel
+
+@{
+    ViewData["Title"] = "EditMember";
+}
+
+<h1 class="text-danger">Edit Member Details</h1>
+
+<form asp-controller="Members" asp-action="EditMember" method="post" asp-route-id="@Model.MemberID">
+    
+    <label>
+        <p>First Name</p>
+        <input id="FirstName" type="text" name="FirstName" value="@Model.FirstName" required  />
+    </label>
+
+    <label>
+        <p>Last Name</p>
+        <input id="LastName" type=text name="LastName" value="@Model.LastName" required/>
+    </label>
+
+    <label>
+        <p>PostCode</p>
+        <input id="PostCode" type=text name="PostCode" value="@Model.PostCode" required/>
+    </label>
+
+    <label>
+        <p>Email</p>
+        <input id="Email" type=text name="Email" value="@Model.Email"/>
+    </label>
+
+    <button type="submit" id="submit">Edit</button>
+    </form>
+

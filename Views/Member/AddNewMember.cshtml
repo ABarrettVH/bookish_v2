@@ -1,0 +1,42 @@
+@using Bookish_v2.Models
+@model MemberViewModel
+
+@{
+    ViewData["Title"] = "AddMember";
+}
+
+<h1 class="text-danger">Add a New Member</h1>
+
+    <form asp-controller="Members" asp-action="AddMember" method="post" >
+        <label>
+            <p>First Name</p>
+            <input id="FirstName" type=text name="FirstName" required/>
+        </label>
+
+        <label>
+            <p>Last Name</p>
+            <input id="LastName" type=text name="LastName" required/>
+        </label>
+
+        <label>
+            <p>Email</p>
+            <input id="Email" type=text name="Email"/>
+        </label>
+
+        <label>
+            <p>PostCode</p>
+            <input id="PostCode" type=text name="PostCode" required/>
+        </label>
+
+        <button type="submit" id="submit">Submit</button>
+    </form>
+
+
+
+         
+
+
+
+
+
+  
