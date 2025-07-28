@@ -34,6 +34,7 @@
                     <th>Available Copies</th>
                     <th>Check Out</th>
                     <th>Edit Details</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +53,14 @@
                             <a class="btn btn-primary edit-btn" role="button" asp-controller="Book" asp-action="EditBookPage" asp-route-id="@book.BookID">
                                 Edit
                             </a>
+                        </td>
+                        <td>
+                            <form asp-controller="Book" asp-action="DeleteBook" asp-route-id="@book.BookID" method="post" style="display:inline;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to permanently delete this book?')">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 }

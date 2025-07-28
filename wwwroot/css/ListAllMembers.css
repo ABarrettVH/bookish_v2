@@ -1,8 +1,8 @@
-.book-container {
+.member-container {
     margin-top: 50px;
 }
 
-.book-list-table {
+.member-list-table {
     width: 100%;
     text-align:center;
 
@@ -16,6 +16,7 @@
         height: 40px;
         width: auto;
     }
+  
     tr {
         margin: 5px;
     }
@@ -27,7 +28,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .book-list-table .btn   {
+    .member-list-table .btn   {
         font-size: 0.7rem;
     }
 }
@@ -39,7 +40,7 @@
 }
 
 @media only screen and (max-width: 375px) {
-    .book-container {
+    .member-container {
         margin: 0;
     }
 }

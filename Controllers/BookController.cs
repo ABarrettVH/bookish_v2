@@ -77,8 +77,8 @@ public class BookController : Controller
         return RedirectToAction("ListAllBooks");
     }
 
-    [HttpDelete("DeleteBook/{Id}")]
-    public IActionResult RemoveBook(int Id)
+    [HttpPost("DeleteBook/{Id}")]
+    public IActionResult DeleteBook(int Id)
     {
 
         var book = _context.Books.FirstOrDefault(b => b.BookID == Id);
