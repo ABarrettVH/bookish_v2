@@ -84,6 +84,11 @@ public class MemberController : Controller
         {
             return NotFound("Member doesn't exist");
         }
+
+        if (_context.MemberBooks.Any(m => m.MemberID == member.MemberID))
+        {
+            return BadRequest("Cannot delete a member with checked out books. Check book back in first.");
+        }
         _context.Members.Remove(member);
         _context.SaveChanges();
 
