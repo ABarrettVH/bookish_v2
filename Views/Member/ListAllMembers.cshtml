@@ -41,16 +41,20 @@
                     @foreach (var member in Model)
                     {
                         <tr>
-                            <td>@member.MemberID</td>
+                            <td>
+                                <a class="member-link" role="button" asp-controller="Member" asp-action="MemberPage" asp-route-id="@member.MemberID">
+                                    @member.MemberID
+                                </a>
+                            </td>
                             <td>@member.LastName</td>
                             <td>@member.FirstName</td>
                             <td>@member.Email</td>
                             <td>@member.PostCode</td>
                             <td>
-                            <a class="btn btn-primary edit-btn" role="button" asp-controller="Member" asp-action="EditMemberPage" asp-route-id="@member.MemberID">
-                                Edit
-                            </a>
-                        </td>
+                                <a class="btn btn-primary edit-btn" role="button" asp-controller="Member" asp-action="EditMemberPage" asp-route-id="@member.MemberID">
+                                    Edit
+                                </a>
+                            </td>
                         <td>
                             <form asp-controller="Member" asp-action="DeleteMember" asp-route-id="@member.MemberID" method="post" style="display:inline;">
                                 @Html.AntiForgeryToken()

@@ -1,0 +1,48 @@
+@model MemberPageViewModel
+@using Bookish_v2.Models
+
+@{
+    ViewData["Title"] = "Member";
+}
+
+<h1 class="text-danger">@Model.Member.FirstName @Model.Member.LastName</h1>
+
+<p>Member ID number: @Model.Member.MemberID</p>
+
+<h2>List of Books Checked Out</h2>
+
+<div class="member-page-book-list-container">
+    @if (Model.Books.Count > 0)
+    {
+        <div class="member-page-container">
+            <table class="member-page-book-list-table">
+                <thead class="member-page-book-list-table-header">
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Due Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var book in Model.Books)
+                    {
+                        <tr>
+                            <td>@book.Title</td>
+                            <td>@book.Author</td>
+                            <td>TBD</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <h5>There are no books currently checked out</h5>
+    }
+</div>
+<div class="member-page-fines">
+    <h3>Outstanding Fines</h3>
+    <p>TBD</p>
+</div>

@@ -28,7 +28,7 @@ public class MemberController : Controller
 
         if (!string.IsNullOrEmpty(SearchString))
         {
-            query = query.Where(m => 
+            query = query.Where(m =>
                 (m.FirstName != null && m.FirstName.ToLower().Contains(SearchString.ToLower())) ||
                 (m.LastName != null && m.LastName.ToLower().Contains(SearchString.ToLower())) ||
                 (m.PostCode != null && m.PostCode.ToLower().Contains(SearchString.ToLower())));
@@ -112,7 +112,7 @@ public class MemberController : Controller
         {
             return NotFound();
         }
-        
+
         existingMember.FirstName = member.FirstName;
         existingMember.LastName = member.LastName;
         existingMember.PostCode = member.PostCode;
@@ -123,6 +123,28 @@ public class MemberController : Controller
         return RedirectToAction("ListAllMembers");
     }
 
+    [HttpGet("Member/{Id}")]
+    public IActionResult MemberPage(int Id)
+    {
+        var member = _context.Members.FirstOrDefault(m => m.MemberID == Id);
+        if (member == null)
+        {
+            return NotFound();
+        }
+        var booksOut = _context.MemberBooks
+                            .Where(m => m.MemberID == member.MemberID)
+                            .Select(mb => mb.Book) 
+                            .ToList();
+        
+        var memberBooks = new MemberPageViewModel
+        {
+            Member = member,
+            Books = booksOut,
+
+        };
+
+        return View("MemberPage", memberBooks);
+    }
 
 }
 

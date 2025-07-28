@@ -1,0 +1,50 @@
+.member-page-book-list-container {
+    margin: 50px 0;
+}
+
+.member-page-book-list-table {
+    width: 100%;
+    text-align:center;
+
+    th {
+        background-color: #e1e5fd;
+        padding: 20px 5px;
+        border: 1px black solid;
+
+    }
+    .checkout-btn, .edit-btn {
+        height: 40px;
+        width: auto;
+    }
+      .delete-btn {
+       padding: 10px;
+        background-color: rgb(184 44 44);
+        color: white;
+    }
+    tr {
+        margin: 5px;
+    }
+    td {
+        border: 1px black solid;
+        padding: 10px 5px;
+
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .member-page-book-list-table .btn   {
+        font-size: 0.7rem;
+    }
+}
+
+@media only screen and (max-width: 426px) {
+    .hidden-on-mobile  {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .member-page-book-list-container {
+        margin: 0;
+    }
+}

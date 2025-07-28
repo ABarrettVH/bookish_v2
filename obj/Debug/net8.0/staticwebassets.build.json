@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "CKQvJQsGmk+amvoAiUrxio5VBM4Esl9Wu7GNMzx+WvE=",
+  "Hash": "qf6mRCiqmti7J58F/oEKiOPOr5XpDQUon/+eu7vvYys=",
   "Source": "Bookish_v2",
   "BasePath": "_content/Bookish_v2",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\ListAllMembers.css"
+    },
+    {
+      "Identity": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\css\\MembersPage.css",
+      "SourceId": "Bookish_v2",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\",
+      "BasePath": "_content/Bookish_v2",
+      "RelativePath": "css/MembersPage.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\MembersPage.css"
     },
     {
       "Identity": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\css\\site.css",
