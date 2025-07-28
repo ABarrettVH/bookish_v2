@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bookish_v2.Models;
 
 public class MemberViewModel
 {
 
-    // [System.ComponentModel.DataAnnotations.Schema.DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int MemberID { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
