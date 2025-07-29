@@ -7,7 +7,7 @@ public class MemberPageViewModel
 {
 
     public MemberViewModel? Member { get; set; }
-    public IList<BookViewModel>? Books { get; set; }
+    public IList<BookOutViewModel>? Books { get; set; }
 
 
 }

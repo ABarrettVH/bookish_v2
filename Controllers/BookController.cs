@@ -173,7 +173,10 @@ public class BookController : Controller
         }
         book.AvailableCopies--;
 
+
         memberBook.BookID = Id;
+        memberBook.DueDate = DateTime.UtcNow.AddMonths(1);
+
 
         _context.MemberBooks.Add(memberBook);
         _context.SaveChanges();

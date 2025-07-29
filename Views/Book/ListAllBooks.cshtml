@@ -45,9 +45,18 @@
                         <td>@book.Author</td>
                         <td class="hidden-on-mobile">@book.TotalCopies</td>
                         <td>@book.AvailableCopies</td>
-                        <td><a class="btn btn-primary checkout-btn" role="button" asp-controller="Book" asp-action="CheckOutBookPage" asp-route-id="@book.BookID">
+                        <td>
+                            @if (book.AvailableCopies > 0) {
+                            <a class="btn btn-primary checkout-btn" role="button" asp-controller="Book" asp-action="CheckOutBookPage" asp-route-id="@book.BookID">
                                 Check Out
-                            </a>
+                            </a>                                
+                            }
+                            else
+                            {
+                            <button class="btn btn-primary checkout-btn" disabled>
+                                Unavailable
+                            </button>                               
+                            }
                         </td>
                         <td>
                             <a class="btn btn-primary edit-btn" role="button" asp-controller="Book" asp-action="EditBookPage" asp-route-id="@book.BookID">

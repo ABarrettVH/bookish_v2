@@ -9,6 +9,7 @@ public class MemberBookViewModel
     public int MemberBookID { get; set; }
     public int MemberID { get; set; }
     public int BookID { get; set; }
+    public DateTime DueDate { get; set; }
     public BookViewModel? Book { get; set; }
     public MemberViewModel? Member { get; set; }
 

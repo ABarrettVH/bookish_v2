@@ -30,7 +30,14 @@
                         <tr>
                             <td>@book.Title</td>
                             <td>@book.Author</td>
-                            <td>TBD</td>
+                            @if (book.DueDate < DateTime.UtcNow ) 
+                            {
+                                <td class="overdue-date">@book.DueDate.ToShortDateString()</td>
+                            }
+                            else
+                            {
+                                <td>@book.DueDate.ToShortDateString()</td>
+                            }
                         </tr>
                     }
                 </tbody>
@@ -44,5 +51,5 @@
 </div>
 <div class="member-page-fines">
     <h3>Outstanding Fines</h3>
-    <p>TBD</p>
+    <p>£@Math.Round(Model.Member.Fine,2)</p>
 </div>

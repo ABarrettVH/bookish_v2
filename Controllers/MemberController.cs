@@ -136,9 +136,15 @@ public class MemberController : Controller
         {
             return NotFound();
         }
+
         var booksOut = _context.MemberBooks
                             .Where(m => m.MemberID == member.MemberID)
-                            .Select(mb => mb.Book) 
+                            .Select(mb => new BookOutViewModel
+                            {
+                                Title = mb.Book.Title,
+                                Author = mb.Book.Author,
+                                DueDate = mb.DueDate
+                            }) 
                             .ToList();
         
         var memberBooks = new MemberPageViewModel
@@ -147,6 +153,16 @@ public class MemberController : Controller
             Books = booksOut,
 
         };
+
+        foreach (var book in booksOut)
+        {
+            if (book.DueDate < DateTime.UtcNow)
+            {
+                var daysOver =( DateTime.UtcNow - book.DueDate).Days;
+                member.Fine += 0.25f*daysOver;
+            }
+        }
+        
 
         return View("MemberPage", memberBooks);
     }

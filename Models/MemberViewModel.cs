@@ -13,6 +13,7 @@ public class MemberViewModel
     public string? LastName { get; set; }
     public string? Email { get; set; }
     public string? PostCode { get; set; }
+    public float Fine { get; set; } = 0;
 
 
 }
