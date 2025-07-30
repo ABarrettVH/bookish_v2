@@ -21,6 +21,7 @@
                         <th>Title</th>
                         <th>Author</th>
                         <th>Due Date</th>
+                        <th>return Book</th>
                     </tr>
                 </thead>
 
@@ -30,14 +31,33 @@
                         <tr>
                             <td>@book.Title</td>
                             <td>@book.Author</td>
-                            @if (book.DueDate < DateTime.UtcNow ) 
+                            @{
+                                var overdueDays = (DateTime.UtcNow - book.DueDate).TotalDays;
+                            }
+                            @if (overdueDays > 0)
                             {
                                 <td class="overdue-date">@book.DueDate.ToShortDateString()</td>
+                                if (overdueDays >1){
+                                    <td class="overdue-date">@Math.Ceiling(overdueDays) Days Overdue</td>
+                                }
+                                else {
+                                    <td class="overdue-date">@Math.Ceiling(overdueDays) Day Overdue</td>
+                                }
+                                
                             }
                             else
                             {
                                 <td>@book.DueDate.ToShortDateString()</td>
                             }
+                            <td>
+                                <form asp-controller="Books" asp-action="CheckIn" asp-route-id="@Model.Member.MemberID" method="post" style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-primary">
+                                        <input id="BookID" type="text" name="BookID" value="@book.BookID" hidden  />
+                                        Return Book
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -51,5 +71,5 @@
 </div>
 <div class="member-page-fines">
     <h3>Outstanding Fines</h3>
-    <p>£@Math.Round(Model.Member.Fine,2)</p>
+    <p>£@Model.Member.Fine.ToString("F2")</p>
 </div>

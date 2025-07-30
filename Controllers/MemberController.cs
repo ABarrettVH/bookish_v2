@@ -141,6 +141,7 @@ public class MemberController : Controller
                             .Where(m => m.MemberID == member.MemberID)
                             .Select(mb => new BookOutViewModel
                             {
+                                BookID = mb.BookID,
                                 Title = mb.Book.Title,
                                 Author = mb.Book.Author,
                                 DueDate = mb.DueDate
@@ -158,8 +159,8 @@ public class MemberController : Controller
         {
             if (book.DueDate < DateTime.UtcNow)
             {
-                var daysOver =( DateTime.UtcNow - book.DueDate).Days;
-                member.Fine += 0.25f*daysOver;
+                var overdueDays = Math.Ceiling((DateTime.UtcNow - book.DueDate).TotalDays);
+                member.Fine += 0.25f * (float)overdueDays;
             }
         }
         

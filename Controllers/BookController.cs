@@ -28,14 +28,14 @@ public class BookController : Controller
 
 
         var query = _context.Books.AsQueryable();
-        
+
         if (!string.IsNullOrEmpty(SearchString))
         {
-            query = query.Where(b => 
+            query = query.Where(b =>
                 (b.Author != null && b.Author.ToLower().Contains(SearchString.ToLower())) ||
                 (b.Title != null && b.Title.ToLower().Contains(SearchString.ToLower())));
         }
-        
+
         var books = query.OrderBy(b => b.Author).ToList();
         return View(new BookViewModel { Books = books });
 
@@ -114,21 +114,21 @@ public class BookController : Controller
         {
             return NotFound();
         }
-        
-            existingBook.Title = book.Title;
-            existingBook.Author = book.Author;
-            existingBook.AvailableCopies = existingBook.AvailableCopies - (existingBook.TotalCopies - book.TotalCopies);
-            existingBook.TotalCopies = book.TotalCopies;
-            if (existingBook.AvailableCopies < 0)
-            {
-                return BadRequest("Cannot remove checked out books - check book in first");
-            }
 
-            if (existingBook.TotalCopies == 0 && existingBook.AvailableCopies == 0)
-            {
-                _context.Remove(existingBook);
-            
-            }
+        existingBook.Title = book.Title;
+        existingBook.Author = book.Author;
+        existingBook.AvailableCopies = existingBook.AvailableCopies - (existingBook.TotalCopies - book.TotalCopies);
+        existingBook.TotalCopies = book.TotalCopies;
+        if (existingBook.AvailableCopies < 0)
+        {
+            return BadRequest("Cannot remove checked out books - check book in first");
+        }
+
+        if (existingBook.TotalCopies == 0 && existingBook.AvailableCopies == 0)
+        {
+            _context.Remove(existingBook);
+
+        }
         _context.SaveChanges();
 
         // return View("ListAllBooks", new BookViewModel { Books = _context.Books.OrderBy(b => b.Author).ToList() });
@@ -155,7 +155,7 @@ public class BookController : Controller
     [Route("CheckOut/{Id}")]
     [ValidateAntiForgeryToken]
     [HttpPost]
-    public IActionResult CheckOut( [FromForm] MemberBookViewModel memberBook, int Id)
+    public IActionResult CheckOut([FromForm] MemberBookViewModel memberBook, int Id)
     {
         var book = _context.Books.FirstOrDefault(b => b.BookID == Id);
         if (book == null)
@@ -182,6 +182,38 @@ public class BookController : Controller
         _context.SaveChanges();
 
         return RedirectToAction("ListAllBooks");
+
+    }
+    
+    [ValidateAntiForgeryToken]
+    [HttpPost("CheckIn/{memberID}")]
+    public IActionResult CheckIn( [FromForm] int bookID, int memberID)
+    {
+
+        var book = _context.Books.FirstOrDefault(b => b.BookID == bookID);
+        if (book == null)
+        {
+            return NotFound("Book doesn't exist");
+        }
+        if (book.AvailableCopies == book.TotalCopies)
+        {
+            return BadRequest("This book is not currently checked out");
+        }
+        var member = _context.Members.FirstOrDefault(m => m.MemberID == memberID);
+        if (member == null)
+        {
+            return NotFound($"Member with ID {memberID} doesn't exist");
+        }
+        book.AvailableCopies++;
+
+        var memberBook = _context.MemberBooks.FirstOrDefault(mb => mb.BookID == bookID && mb.MemberID == memberID);
+        if (memberBook != null)
+        {
+            _context.MemberBooks.Remove(memberBook);
+        }
+        _context.SaveChanges();
+
+        return RedirectToAction("MemberPage","Member", new { Id = memberID });
 
     }
 

@@ -47,7 +47,7 @@
                         <td>@book.AvailableCopies</td>
                         <td>
                             @if (book.AvailableCopies > 0) {
-                            <a class="btn btn-primary checkout-btn" role="button" asp-controller="Book" asp-action="CheckOutBookPage" asp-route-id="@book.BookID">
+                             <a class="btn btn-primary checkout-btn" role="button" asp-controller="Book" asp-action="CheckOutBookPage" asp-route-id="@book.BookID">
                                 Check Out
                             </a>                                
                             }
