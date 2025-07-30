@@ -37,7 +37,10 @@ public class BookController : Controller
         }
 
         var books = query.OrderBy(b => b.Author).ToList();
-        return View(new BookViewModel { Books = books });
+        var members = _context.Members.ToList();
+        var memberBooks = _context.MemberBooks.ToList();
+
+        return View(new BookViewModel { Books = books, Members = members, MemberBooks = memberBooks });
 
     }
 

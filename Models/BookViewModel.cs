@@ -12,6 +12,9 @@ public class BookViewModel
     public int AvailableCopies { get; set; }
     public int TotalCopies { get; set; }
     public IList<BookViewModel>? Books { get; set; }
+    public IList<MemberViewModel> Members { get; set; }
+    public IList<MemberBookViewModel> MemberBooks { get; set; }
+
 
 
 }
