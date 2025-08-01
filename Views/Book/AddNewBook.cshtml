@@ -5,26 +5,70 @@
     ViewData["Title"] = "AddBook";
 }
 
-<h1 class="text-danger">Add a New Book</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-book me-2"></i>Add New Book
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Books" asp-action="AddBook" method="post">
+                        @Html.AntiForgeryToken()
+                        
+                        <div class="mb-3">
+                            <label for="Title" class="form-label">
+                                <strong>Title</strong> <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Title" 
+                                   class="form-control" 
+                                   placeholder="Enter book title" 
+                                   required />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
 
-    <h2>Add a book to the catalogue . . .</h2>
-    <form asp-controller="Books" asp-action="AddBook" method="post" >
-    <label>
-        <p>Title</p>
-        <input id="Title" type=text name="Title" required/>
-    </label>
+                        <div class="mb-3">
+                            <label for="Author" class="form-label">
+                                <strong>Author</strong> <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Author" 
+                                   class="form-control" 
+                                   placeholder="Book Author" 
+                                   required />
+                            <span asp-validation-for="Author" class="text-danger"></span>
+                        </div>
 
-    <label>
-        <p>Author</p>
-        <input id="Author" type=text name="Author" required/>
-    </label>
+                        <div class="mb-3">
+                            <label for="AddCopies" class="form-label">
+                                <strong>Number of Copies</strong>
+                            </label>
+                            <input asp-for="AddCopies" 
+                                   type="number" 
+                                   class="form-control" 
+                                   placeholder="Enter number of copies of book to add" />
+                            <span asp-validation-for="AddCopies" class="text-danger"></span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Add Book
+                            </button>
+                            <a asp-controller="Book" asp-action="ListAllBooks" 
+                               class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <label>
-        <p>Number of Copies</p>
-        <input id="AddCopies" type=number name="AddCopies"/>
-    </label>
-    <button type="submit" id="submit">Submit</button>
-    </form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
 
 

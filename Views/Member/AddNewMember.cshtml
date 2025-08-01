@@ -2,51 +2,105 @@
 @model MemberViewModel
 
 @{
-    ViewData["Title"] = "AddMember";
+    ViewData["Title"] = "Add Member";
 }
 
-<h1 class="text-danger">Add a New Member</h1>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-user-plus me-2"></i>Add a New Member
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Members" asp-action="AddMember" method="post">
+                        @Html.AntiForgeryToken()
+                        
+                        <div class="mb-3">
+                            <label for="FirstName" class="form-label">
+                                <strong>First Name</strong> <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="FirstName" 
+                                   class="form-control" 
+                                   placeholder="Enter first name" 
+                                   required />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
 
-    <form asp-controller="Members" asp-action="AddMember" method="post" >
-        <label>
-            <p>First Name</p>
-            <input id="FirstName" type=text name="FirstName" required/>
-        </label>
+                        <div class="mb-3">
+                            <label for="LastName" class="form-label">
+                                <strong>Last Name</strong> <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="LastName" 
+                                   class="form-control" 
+                                   placeholder="Enter last name" 
+                                   required />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
 
-        <label>
-            <p>Last Name</p>
-            <input id="LastName" type=text name="LastName" required/>
-        </label>
+                        <div class="mb-3">
+                            <label for="Email" class="form-label">
+                                <strong>Email Address</strong>
+                            </label>
+                            <input asp-for="Email" 
+                                   type="email" 
+                                   class="form-control" 
+                                   placeholder="Enter email address" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
 
-        <label>
-            <p>Email</p>
-            <input id="Email" type=text name="Email"/>
-        </label>
+                        <div class="mb-3">
+                            <label for="PostCode" class="form-label">
+                                <strong>Post Code</strong> <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="PostCode" 
+                                   class="form-control" 
+                                   placeholder="Enter post code" 
+                                   required />
+                            <span asp-validation-for="PostCode" class="text-danger"></span>
+                        </div>
 
-        <label>
-            <p>PostCode</p>
-            <input id="PostCode" type=text name="PostCode" required/>
-        </label>
+                        <div class="mb-3">
+                            <label for="Username" class="form-label">
+                                <strong>Username</strong> <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Username" 
+                                   class="form-control" 
+                                   placeholder="Enter username" 
+                                   required />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
 
-       <label>
-            <p>User Name</p>
-            <input id="Username" type=text name="Username" required/>
-        </label>
+                        <div class="mb-4">
+                            <label for="Password" class="form-label">
+                                <strong>Password</strong> <span class="text-danger">*</span>
+                            </label>
+                            <input asp-for="Password" 
+                                   type="password" 
+                                   class="form-control" 
+                                   placeholder="Enter password" 
+                                   required />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
 
-       <label>
-            <p>Password</p>
-            <input id="Password" type=password name="Password" required/>
-        </label>
-        
-        <button type="submit" id="submit">Submit</button>
-    </form>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-save me-2"></i>Add Member
+                            </button>
+                            <a asp-controller="Member" asp-action="ListAllMembers" 
+                               class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-
-         
-
-
-
-
-
-  
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
