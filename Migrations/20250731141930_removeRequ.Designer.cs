@@ -3,6 +3,7 @@ using System;
 using Bookish_v2_DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookishDB.Migrations
 {
     [DbContext(typeof(BookishContext))]
-    partial class BookishContextModelSnapshot : ModelSnapshot
+    [Migration("20250731141930_removeRequ")]
+    partial class removeRequ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,12 +109,6 @@ namespace BookishDB.Migrations
 
                     b.Property<string>("PostCode")
                         .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.Property<byte[]>("Salt")
-                        .HasColumnType("bytea");
 
                     b.Property<string>("Username")
                         .HasColumnType("text");

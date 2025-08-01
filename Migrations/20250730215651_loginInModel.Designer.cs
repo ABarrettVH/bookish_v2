@@ -3,6 +3,7 @@ using System;
 using Bookish_v2_DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BookishDB.Migrations
 {
     [DbContext(typeof(BookishContext))]
-    partial class BookishContextModelSnapshot : ModelSnapshot
+    [Migration("20250730215651_loginInModel")]
+    partial class loginInModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,10 +101,11 @@ namespace BookishDB.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("HashedPassword")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("LastName")
                         .HasColumnType("text");
 
                     b.Property<string>("PostCode")
@@ -111,9 +115,11 @@ namespace BookishDB.Migrations
                         .HasColumnType("integer");
 
                     b.Property<byte[]>("Salt")
+                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("MemberID");

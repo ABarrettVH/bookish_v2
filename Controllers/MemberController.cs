@@ -2,6 +2,10 @@ using Bookish_v2_DB;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Bookish_v2.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System;
 
 
 namespace Bookish_v2.Controllers;
@@ -34,7 +38,8 @@ public class MemberController : Controller
                 (m.PostCode != null && m.PostCode.ToLower().Contains(SearchString.ToLower())));
         }
 
-        var members = query.OrderBy(m => m.LastName).ToList();
+        var members = query.OrderBy(m => m.LastName).Where(m => m.Role == MemberViewModel.Roles.MEMBER).ToList();
+        
 
         return View(members);
 
@@ -61,12 +66,29 @@ public class MemberController : Controller
             return BadRequest("Member already exists - please edit exisiting member if needed, or use a middle initial");
         }
 
+        byte[] salt = new byte[128 / 8];
+            using (var rngCsp = new RNGCryptoServiceProvider())
+            {
+                rngCsp.GetNonZeroBytes(salt);
+
+            }
+        
+        var hashedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: newMember.Password,
+                salt: salt,
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 100000,
+                numBytesRequested: 256 / 8));
+
         var member = new MemberViewModel
         {
             FirstName = newMember.FirstName,
             LastName = newMember.LastName,
             Email = newMember.Email,
-            PostCode = newMember.PostCode
+            PostCode = newMember.PostCode,
+            Username = newMember.Username,
+            Password = hashedPassword,
+            Salt = salt
         };
 
         _context.Members.Add(member);

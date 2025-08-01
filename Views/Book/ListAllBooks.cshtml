@@ -30,12 +30,16 @@
                 <tr>
                     <th> Title</th>
                     <th>Author</th>
-                    <th class="hidden-on-mobile">Total Copies</th>
+                    @if(User.IsInRole("ADMIN")){
+                        <th class="hidden-on-mobile">Total Copies</th>
+                    }
                     <th>Available Copies</th>
-                    <th>Checked Out By</th>
-                    <th>Check Out</th>
-                    <th>Edit Details</th>
-                    <th>Delete</th>
+                    @if(User.IsInRole("ADMIN")){
+                        <th>Checked Out By</th>
+                        <th>Check Out</th>
+                        <th>Edit Details</th>
+                        <th>Delete</th>
+                    }
                     
                 </tr>
             </thead>
@@ -45,47 +49,51 @@
                     <tr>
                         <td>@book.Title</td>
                         <td>@book.Author</td>
+                        @if(User.IsInRole("ADMIN")){
                         <td class="hidden-on-mobile">@book.TotalCopies</td>
+                        }
                         <td>@book.AvailableCopies</td>
-                        <td>
-                            @foreach (var entry in Model.MemberBooks){
-                                if (entry.BookID == book.BookID) {
-                                    var member = Model.Members.FirstOrDefault(m => m.MemberID ==entry.MemberID );
-                                    if (member != null){
-                                        <a class="member-link" role="button" asp-controller="Member" asp-action="MemberPage" asp-route-id="@member.MemberID">
-                                            <p>@entry.MemberID: @member.FirstName @member.LastName</p>
-                                        </a>
+                        @if(User.IsInRole("ADMIN")){
+                            <td>
+                                @foreach (var entry in Model.MemberBooks){
+                                    if (entry.BookID == book.BookID) {
+                                        var member = Model.Members.FirstOrDefault(m => m.MemberID ==entry.MemberID );
+                                        if (member != null){
+                                            <a class="member-link" role="button" asp-controller="Member" asp-action="MemberPage" asp-route-id="@member.MemberID">
+                                                <p>@entry.MemberID: @member.FirstName @member.LastName</p>
+                                            </a>
+                                            }
                                         }
                                     }
+                                
+                            </td>
+                            <td>
+                                @if (book.AvailableCopies > 0) {
+                                <a class="btn btn-primary checkout-btn" role="button" asp-controller="Book" asp-action="CheckOutBookPage" asp-route-id="@book.BookID">
+                                    Check Out
+                                </a>                                
                                 }
-                            
-                        </td>
-                        <td>
-                            @if (book.AvailableCopies > 0) {
-                             <a class="btn btn-primary checkout-btn" role="button" asp-controller="Book" asp-action="CheckOutBookPage" asp-route-id="@book.BookID">
-                                Check Out
-                            </a>                                
-                            }
-                            else
-                            {
-                            <button class="btn btn-primary checkout-btn" disabled>
-                                Unavailable
-                            </button>                               
-                            }
-                        </td>
-                        <td>
-                            <a class="btn btn-primary edit-btn" role="button" asp-controller="Book" asp-action="EditBookPage" asp-route-id="@book.BookID">
-                                Edit
-                            </a>
-                        </td>
-                        <td>
-                            <form asp-controller="Book" asp-action="DeleteBook" asp-route-id="@book.BookID" method="post" style="display:inline;">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to permanently delete this book?')">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </form>
-                        </td>
+                                else
+                                {
+                                <button class="btn btn-primary checkout-btn" disabled>
+                                    Unavailable
+                                </button>                               
+                                }
+                            </td>
+                            <td>
+                                <a class="btn btn-primary edit-btn" role="button" asp-controller="Book" asp-action="EditBookPage" asp-route-id="@book.BookID">
+                                    Edit
+                                </a>
+                            </td>
+                            <td>
+                                <form asp-controller="Book" asp-action="DeleteBook" asp-route-id="@book.BookID" method="post" style="display:inline;">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to permanently delete this book?')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        }
                     </tr>
                 }
             </tbody>
