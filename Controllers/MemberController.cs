@@ -22,7 +22,7 @@ public class MemberController : Controller
 
     [Authorize(Roles = "ADMIN")]
     [HttpGet("")]
-    public IActionResult ListAllMembers(string? SearchString)
+    public IActionResult ListAllMembers(string? SearchString,string? SearchStringID)
     {
 
         var query = _context.Members.AsQueryable();
@@ -34,6 +34,11 @@ public class MemberController : Controller
                 (m.LastName != null && m.LastName.ToLower().Contains(SearchString.ToLower())) ||
                 (m.PostCode != null && m.PostCode.ToLower().Contains(SearchString.ToLower())));
         }
+
+        if (!string.IsNullOrEmpty(SearchStringID) && int.TryParse(SearchStringID, out int memberId))
+    {
+        query = query.Where(m => m.MemberID == memberId);
+    }
 
         var members = query.OrderBy(m => m.LastName).Where(m => m.Role == MemberViewModel.Roles.MEMBER).ToList();
         

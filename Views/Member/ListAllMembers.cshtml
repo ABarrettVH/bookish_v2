@@ -18,6 +18,14 @@
         <input class="search-bar-input" type="submit" value="Search" />
     </p>
 }
+<h4>or</h4>
+@using (Html.BeginForm(null, null, FormMethod.Get))
+{
+    <p class="search-bar">
+        Find by member ID: @Html.TextBox("SearchStringID")  
+        <input class="search-bar-input" type="submit" value="Search" />
+    </p>
+}
 
 <div class="member-list-container">
     @if (Model != null && Model.Any())
