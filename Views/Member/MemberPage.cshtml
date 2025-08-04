@@ -8,10 +8,17 @@
 <h1 class="text-danger">@Model.Member.FirstName @Model.Member.LastName</h1>
 
 <p>Member ID number: @Model.Member.MemberID</p>
-    
-<a class="btn btn-primary edit-btn" role="button" asp-controller="Member" asp-action="EditMemberbyUserPage" asp-route-id="@Model.Member.MemberID">
+@if (User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == Model.Member.MemberID.ToString())
+{
+    <a class="btn btn-primary edit-btn" role="button" asp-controller="Member" asp-action="EditMemberbyUserPage" asp-route-id="@Model.Member.MemberID">
     Edit Details
-</a>
+    </a>
+} else
+{
+    <a class="btn btn-primary edit-btn" role="button" asp-controller="Member" asp-action="EditMemberPage" asp-route-id="@Model.Member.MemberID">
+        Edit Details
+    </a>
+}
 
 <h2>List of Books Checked Out</h2>
 
