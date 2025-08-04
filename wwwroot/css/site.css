@@ -21,6 +21,9 @@ body {
   margin-bottom: 60px;
 }
 
+.error-message {
+  display: block;
+}
 
 
 

@@ -1,19 +1,14 @@
 using Bookish_v2_DB;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
 using Bookish_v2.Models;
-﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Authorization;
-using System;
 
 
 namespace Bookish_v2.Controllers;
 
-[ApiController]
 [Route("Members")]
-[Produces("application/json")]
 public class MemberController : Controller
 {
     private readonly ILogger<MemberController> _logger;
@@ -162,6 +157,77 @@ public class MemberController : Controller
 
         return RedirectToAction("ListAllMembers");
     }
+
+    [HttpGet("EditMemberbyUser/{Id}")]
+    public IActionResult EditMemberbyUserPage(int Id)
+    {
+        var member = _context.Members.FirstOrDefault(m => m.MemberID == Id);
+        if (member == null)
+        {
+            return NotFound();
+        }
+        return View("EditMemberbyUser", member);
+    }
+
+    [Route("EditMemberbyUser/{Id}")]
+    [ValidateAntiForgeryToken]
+    [HttpPost]
+    public IActionResult EditMemberbyUser([FromForm] MemberViewModel member, int Id)
+    {
+
+        var existingMember = _context.Members.FirstOrDefault(m => m.MemberID == Id);
+        if (existingMember == null)
+        {
+            return NotFound();
+        }
+
+        var usernameTaken = _context.Members.Any(m => m.Username == member.Username && m.MemberID != Id);
+        if (usernameTaken)
+        {
+        ModelState.AddModelError(nameof(member.Username), "Username is taken - choose another");
+        return View("EditMemberbyUser", existingMember);
+        }
+
+        existingMember.FirstName = member.FirstName;
+        existingMember.LastName = member.LastName;
+        existingMember.PostCode = member.PostCode;
+        existingMember.Email = member.Email;
+        existingMember.Username = member.Username;
+
+        _context.SaveChanges();
+
+        var booksOut = _context.MemberBooks
+                            .Where(m => m.MemberID == member.MemberID)
+                            .Select(mb => new BookOutViewModel
+                            {
+                                BookID = mb.BookID,
+                                Title = mb.Book.Title,
+                                Author = mb.Book.Author,
+                                DueDate = mb.DueDate
+                            }) 
+                            .ToList();
+        
+        var memberBooks = new MemberPageViewModel
+        {
+            Member = existingMember,
+            Books = booksOut,
+
+        };
+
+        foreach (var book in booksOut)
+        {
+            if (book.DueDate < DateTime.UtcNow)
+            {
+                var overdueDays = Math.Ceiling((DateTime.UtcNow - book.DueDate).TotalDays);
+                member.Fine += 0.25f * (float)overdueDays;
+            }
+        }
+        
+
+        return View("MemberPage", memberBooks);
+
+    }
+
 
 
     [HttpGet("Member/{Id}")]
