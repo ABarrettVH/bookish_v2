@@ -1,0 +1,34 @@
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+    }
+    
+    .feature-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+    }
+    
+    .feature-icon {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .stat-item {
+        padding: 20px;
+        transition: transform 0.3s ease;
+    }
+    
+    .stat-item:hover {
+        transform: scale(1.05);
+    }
+    
+    .book-stack {
+        animation: float 3s ease-in-out infinite;
+    }

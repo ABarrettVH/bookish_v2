@@ -1,7 +1,213 @@
-﻿@{
+﻿@using System.Security.Claims
+@using Bookish_v2_DB;
+@using Bookish_v2.Models;
+@inject BookishContext db;
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Library Management System</thead></h1>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center p-4">
+                        <h4 class="card-title">
+                            <i class="fas fa-user me-2"></i>
+                            Welcome back, @User.FindFirst("FirstName")?.Value!
+                        </h4>
+                        <p class="card-text">Ready to continue your reading journey?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!-- Hero Section -->
+<div class="hero-section bg-gradient text-white text-center py-5 mb-5" style="min-height:  = 0">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a asp-controller="Book" asp-action="ListAllBooks" class="btn btn-lg me-md-2">
+                        <i class="fas fa-search me-2"></i>Browse Books
+                    </a>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Login" asp-action="LoginPage" class="btn btn-outline-dark btn-lg">
+                            <i class="fas fa-sign-in-alt me-2"></i>Login
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="book-stack">
+                    <i class="fas fa-books fa-10x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Features Section -->
+<div class="container mb-5">
+    <div class="row text-center mb-4">
+        <div class="col">
+            <h2 class="display-5 fw-bold text-primary">Book Bound</h2>
+            <p class="lead text-muted">Everything you need for your reading experience</p>
+        </div>
+    </div>
+    
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 feature-card">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-book fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Browse Book Catalogue</h5>
+                    <p class="card-text text-muted">
+                        Explore our vast collection of books across all genres. Find your next favorite read.
+                    </p>
+                    <a asp-controller="Book" asp-action="ListAllBooks" class="btn btn-outline-primary">
+                        View Books
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+    @if(User.IsInRole("ADMIN")){
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 feature-card">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-user-friends fa-3x text-success"></i>
+                    </div>
+                        <h5 class="card-title fw-bold">Member Management</h5>
+                        <p class="card-text text-muted">
+                            Profile management for all library users.
+                        </p>
+                        <a asp-controller="Member" asp-action="ListAllMembers" class="btn btn-outline-success">
+                            Manage Members
+                        </a>
+                </div>
+            </div>
+        </div>
+    } else 
+    {
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 feature-card">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-user-circle me-2 fa-3x text-success"></i>
+                    </div>
+                        <h5 class="card-title fw-bold">My Profile</h5>
+                        <p class="card-text text-muted">
+                            Keep on track of your borrowing
+                        </p> 
+                        <a asp-controller="Member" asp-action="MemberPage" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value" class="btn btn-outline-success"> 
+                            My Profile
+                        </a>
+                </div>
+            </div>
+        </div>   
+    }
+        
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 feature-card">
+                <div class="card-body text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-exchange-alt fa-3x text-warning"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Book Checkout</h5>
+                    <p class="card-text text-muted">
+                        Simple and efficient book borrowing system with due date tracking.
+                    </p>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-controller="Book" asp-action="ListAllBooks" class="btn btn-outline-warning">
+                            Checkout Books
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="btn btn-outline-warning disabled">Login Required</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="bg-light py-5 mb-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="stat-item">
+                    <i class="fas fa-book fa-2x text-primary mb-2"></i>
+                    <h3 class="fw-bold text-primary">@db.Books.Count()+</h3>
+                    <p class="text-muted">Books Available</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="stat-item">
+                    <i class="fas fa-users fa-2x text-success mb-2"></i>
+                    <h3 class="fw-bold text-success">@db.Members.Count(m => m.Role == MemberViewModel.Roles.MEMBER)+</h3>
+                    <p class="text-muted">Active Members</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="stat-item">
+                    <i class="fas fa-calendar fa-2x text-warning mb-2"></i>
+                    <h3 class="fw-bold text-warning">24/7</h3>
+                    <p class="text-muted">Online Access</p>
+                </div>
+            </div>
+            @* <div class="col-md-3 mb-4">
+                <div class="stat-item">
+                    <i class="fas fa-star fa-2x text-info mb-2"></i>
+                    <h3 class="fw-bold text-info">5★</h3>
+                    <p class="text-muted">Member Rating</p>
+                </div>
+            </div> *@
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+@* @if (User.Identity.IsAuthenticated)
+{
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col">
+                <div class="card bg-primary text-white">
+                    <div class="card-body text-center p-4">
+                        <h4 class="card-title">
+                            <i class="fas fa-user me-2"></i>
+                            Welcome back, @User.FindFirst("FirstName")?.Value!
+                        </h4>
+                        <p class="card-text">Ready to continue your reading journey?</p>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a asp-controller="Member" asp-action="MemberPage" asp-route-id="@User.FindFirst(ClaimTypes.NameIdentifier)?.Value" 
+                               class="btn btn-light">
+                                <i class="fas fa-user-circle me-2"></i>My Profile
+                            </a>
+                            <a asp-controller="Book" asp-action="ListAllBooks" class="btn btn-outline-light">
+                                <i class="fas fa-book me-2"></i>Browse Books
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+} *@
+
+<style>    
+    @@keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+</style>

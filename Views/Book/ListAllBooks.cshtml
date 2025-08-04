@@ -6,16 +6,17 @@
 }
 
 <h1 class="text-danger">Book Catalogue</h1>
-
-<a class="btn btn-primary" role="button" asp-controller="Book" asp-action="AddNewBookPage">
-    Add a new Book
-</a>
+@if(User.IsInRole("ADMIN")){
+    <a class="btn btn-primary btn-add-book" role="button" asp-controller="Book" asp-action="AddNewBookPage">
+        Add a new Book
+    </a>
+}
 
 @using (Html.BeginForm(null, null, FormMethod.Get))
 {
-    <p>
+    <p class="seach-bar">
         Find by Title or Author: @Html.TextBox("SearchString")  
-        <input type="submit" value="Search" />
+        <input class="search-bar-input" type="submit" value="Search" />
     </p>
 }
 

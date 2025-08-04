@@ -1,3 +1,11 @@
+.search-bar {
+    padding: 15px;
+}
+
+.search-bar-input {
+    margin: 10px;
+}
+
 .member-container {
     margin-top: 50px;
 }
@@ -30,6 +38,8 @@
 
     }
 }
+
+
 
 @media only screen and (max-width: 768px) {
     .member-list-table .btn   {

@@ -5,12 +5,20 @@
       "PackagePath": "staticwebassets\\Bookish_v2.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\css\\LandingPage.css",
+      "PackagePath": "staticwebassets\\css\\LandingPage.css"
+    },
+    {
       "Id": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\css\\ListAllBooks.css",
       "PackagePath": "staticwebassets\\css\\ListAllBooks.css"
     },
     {
       "Id": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\css\\ListAllMembers.css",
       "PackagePath": "staticwebassets\\css\\ListAllMembers.css"
+    },
+    {
+      "Id": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\css\\Login.css",
+      "PackagePath": "staticwebassets\\css\\Login.css"
     },
     {
       "Id": "C:\\Users\\AliBar\\Documents\\Training\\Bookish\\Bookish_v2\\wwwroot\\css\\MembersPage.css",

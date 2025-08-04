@@ -1,3 +1,15 @@
+.btn-add-book {
+    margin: 10px;
+}
+
+.search-bar {
+    padding: 15px;
+}
+
+.search-bar-input {
+    margin: 10px;
+}
+
 .book-container {
     margin-top: 50px;
 }

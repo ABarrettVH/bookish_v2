@@ -2,6 +2,7 @@ using Bookish_v2_DB;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Bookish_v2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Bookish_v2.Controllers;
@@ -44,12 +45,14 @@ public class BookController : Controller
 
     }
 
+    [Authorize(Roles="ADMIN")]
     [HttpGet("AddBook")]
     public IActionResult AddNewBookPage(string? SearchString)
     {
         return View("AddNewBook");
     }
 
+    [Authorize(Roles="ADMIN")]
     [HttpPost("AddBook")]
     [ValidateAntiForgeryToken]
     public IActionResult AddNewBookMethod([FromForm] AddBookViewModel addbook)
@@ -80,6 +83,7 @@ public class BookController : Controller
         return RedirectToAction("ListAllBooks");
     }
 
+    [Authorize(Roles="ADMIN")]
     [HttpPost("DeleteBook/{Id}")]
     public IActionResult DeleteBook(int Id)
     {
@@ -95,6 +99,7 @@ public class BookController : Controller
         return RedirectToAction("ListAllBooks");
     }
 
+    [Authorize(Roles = "ADMIN")]
     [HttpGet("EditBook/{Id}")]
     public IActionResult EditBookPage(int Id)
     {
@@ -106,6 +111,7 @@ public class BookController : Controller
         return View("EditBook", book);
     }
 
+    [Authorize(Roles = "ADMIN")]
     [Route("EditBook/{Id}")]
     [ValidateAntiForgeryToken]
     [HttpPost]
@@ -138,6 +144,7 @@ public class BookController : Controller
         return RedirectToAction("ListAllBooks");
     }
 
+    [Authorize(Roles = "ADMIN")]
     [HttpGet("CheckOut/{Id}")]
     public IActionResult CheckOutBookPage(int Id)
     {
@@ -155,6 +162,7 @@ public class BookController : Controller
         return View("CheckOutBook", memberBook);
     }
 
+    [Authorize(Roles = "ADMIN")]
     [Route("CheckOut/{Id}")]
     [ValidateAntiForgeryToken]
     [HttpPost]
@@ -187,7 +195,8 @@ public class BookController : Controller
         return RedirectToAction("ListAllBooks");
 
     }
-    
+
+    [Authorize(Roles = "ADMIN")]   
     [ValidateAntiForgeryToken]
     [HttpPost("CheckIn/{memberID}")]
     public IActionResult CheckIn( [FromForm] int bookID, int memberID)

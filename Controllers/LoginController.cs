@@ -66,7 +66,9 @@ public class LoginController : Controller
             new Claim(ClaimTypes.Name, existingUser.Username!),
             new Claim(ClaimTypes.NameIdentifier, existingUser.MemberID.ToString()),
             new Claim(ClaimTypes.Role, existingUser.Role.ToString()),
-            new Claim("FullName", $"{existingUser.FirstName} {existingUser.LastName}")
+            new Claim("FirstName", $"{existingUser.FirstName}"),
+            new Claim("LastName", $"{existingUser.LastName}")
+
         };
 
         var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
@@ -77,11 +79,8 @@ public class LoginController : Controller
 
         await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(claimsIdentity), authProperties);
 
-        if (existingUser.Role == MemberViewModel.Roles.ADMIN)
-        {
-            return RedirectToAction("ListAllBooks", "Book");
-        }
-        return RedirectToAction("MemberPage", "Member", new { Id = existingUser.MemberID });
+        return RedirectToAction("Index", "Home");
+        // return RedirectToAction("MemberPage", "Member", new { Id = existingUser.MemberID });
     }
 
     

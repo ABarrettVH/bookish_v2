@@ -5,6 +5,7 @@ using Bookish_v2.Models;
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.AspNetCore.Authorization;
 using System;
 
 
@@ -24,6 +25,7 @@ public class MemberController : Controller
         _context = context;
     }
 
+    [Authorize(Roles = "ADMIN")]
     [HttpGet("")]
     public IActionResult ListAllMembers(string? SearchString)
     {
@@ -63,7 +65,15 @@ public class MemberController : Controller
 
         if (existingMember != null)
         {
-            return BadRequest("Member already exists - please edit exisiting member if needed, or use a middle initial");
+            ModelState.AddModelError(string.Empty, "Member already exists - please edit existing member if needed, or use a middle initial");
+            return View("AddNewMember", newMember);
+        }
+
+        var usernameTaken = _context.Members.Any(m => m.Username == newMember.Username);
+        if (usernameTaken)
+        {
+            ModelState.AddModelError(nameof(newMember.Username), "Username is taken - choose another");
+            return View("AddNewMember", newMember);
         }
 
         byte[] salt = new byte[128 / 8];
@@ -97,6 +107,7 @@ public class MemberController : Controller
         return RedirectToAction("ListAllMembers");
     }
 
+    [Authorize(Roles = "ADMIN")]
     [HttpPost("DeleteMember/{Id}")]
     public IActionResult DeleteMember(int Id)
     {
@@ -117,6 +128,7 @@ public class MemberController : Controller
         return RedirectToAction("ListAllMembers");
     }
 
+    [Authorize(Roles = "ADMIN")]
     [HttpGet("EditMember/{Id}")]
     public IActionResult EditMemberPage(int Id)
     {
@@ -128,6 +140,7 @@ public class MemberController : Controller
         return View("EditMember", member);
     }
 
+    [Authorize(Roles = "ADMIN")]
     [Route("EditMember/{Id}")]
     [ValidateAntiForgeryToken]
     [HttpPost]
@@ -149,6 +162,7 @@ public class MemberController : Controller
 
         return RedirectToAction("ListAllMembers");
     }
+
 
     [HttpGet("Member/{Id}")]
     public IActionResult MemberPage(int Id)

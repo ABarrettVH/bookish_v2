@@ -13,9 +13,9 @@
 
 @using (Html.BeginForm(null, null, FormMethod.Get))
 {
-    <p>
+    <p class="search-bar">
         Find by first name, last name or postcode: @Html.TextBox("SearchString")  
-        <input type="submit" value="Search" />
+        <input class="search-bar-input" type="submit" value="Search" />
     </p>
 }
 
@@ -49,7 +49,7 @@
                             <td>@member.LastName</td>
                             <td>@member.FirstName</td>
                             <td>@member.Email</td>
-                            <td>@member.PostCode</td>
+                            <td>@member.PostCode.ToUpper()</td>
                             <td>
                                 <a class="btn btn-primary edit-btn" role="button" asp-controller="Member" asp-action="EditMemberPage" asp-route-id="@member.MemberID">
                                     Edit

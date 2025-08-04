@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="~/css/ListAllBooks.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/ListAllMembers.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/MembersPage.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/LandingPage.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true"/>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
@@ -17,13 +20,8 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                @if(User.IsInRole("ADMIN")){
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Al's Library</a>
-                } else if (User.Identity.IsAuthenticated) {
-                <a class="navbar-brand" asp-area="" asp-controller="Member" asp-action="MemberPage" asp-route-id="@(User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value)">My Library</a>
-                } else {
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Al's Library</a>
-                }
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-book me-2"></i>Book Bound</a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
